@@ -7,14 +7,12 @@ export type Wallet = {
 }
 
 enum WalletNames {
-  ARAGON = "Aragon Agent",
-  DAO = "DAO Committee",
+  DAO = "CityDAO Treasury",
+  GUILD = "CityDAO Guild",
 }
 
 const WALLETS: Wallet[] = [
-  { name: WalletNames.ARAGON, address: "0x9a6ebe7e2a7722f8200d0ffb63a1f6406a0d7dce", network: Networks.getEth() },
-  { name: WalletNames.DAO, address: "0x89214c8ca9a49e60a3bfa8e00544f384c93719b1", network: Networks.getEth() },
-  { name: WalletNames.DAO, address: "0xb08e3e7cc815213304d884c88ca476ebc50eaab2", network: Networks.getPolygon() },
+  { name: WalletNames.DAO, address: "0x60e7343205c9c88788a22c40030d35f9370d302d", network: Networks.getEth() },
 ]
 
 export class Wallets {

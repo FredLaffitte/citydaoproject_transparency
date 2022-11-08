@@ -23,46 +23,6 @@ jobs:
           node-version: '14'
       - run: npm install && npm link typescript
 
-      - name: Pull Proposals
-        env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          SHEET_CLIENT_EMAIL: ${{ secrets.SHEET_CLIENT_EMAIL }}
-          SHEET_PRIVATE_KEY: ${{ secrets.SHEET_PRIVATE_KEY }}
-        run: |
-          npx ts-node ./src/export-proposals.ts
-          npx ts-node ./src/upload.ts Proposals ./public/proposals.csv
-
-      - name: Pull Votes
-        env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          SHEET_CLIENT_EMAIL: ${{ secrets.SHEET_CLIENT_EMAIL }}
-          SHEET_PRIVATE_KEY: ${{ secrets.SHEET_PRIVATE_KEY }}
-        run: |
-          npx ts-node ./src/export-votes.ts
-          npx ts-node ./src/upload.ts Votes ./public/votes.csv
-
-      - name: Pull Grants
-        env:
-          COVALENTHQ_API_KEY: ${{ secrets.COVALENTHQ_API_KEY }}
-          INFURA_URL: ${{ secrets.INFURA_URL }}
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          SHEET_CLIENT_EMAIL: ${{ secrets.SHEET_CLIENT_EMAIL }}
-          SHEET_PRIVATE_KEY: ${{ secrets.SHEET_PRIVATE_KEY }}
-        run: |
-          npx ts-node ./src/export-grants.ts
-          npx ts-node ./src/upload.ts Grants ./public/grants.csv
-
-      - name: Pull Balances
-        env:
-          COVALENTHQ_API_KEY: ${{ secrets.COVALENTHQ_API_KEY }}
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          SHEET_CLIENT_EMAIL: ${{ secrets.SHEET_CLIENT_EMAIL }}
-          SHEET_PRIVATE_KEY: ${{ secrets.SHEET_PRIVATE_KEY }}
-        run: |
-          npx ts-node ./src/export-balances.ts
-          npx ts-node ./src/upload.ts Balances ./public/balances.csv
-          npx ts-node ./src/upload.ts BalanceHistory ./public/balances.csv --append
-
       - name: Pull Transactions
         env:
           COVALENTHQ_API_KEY: ${{ secrets.COVALENTHQ_API_KEY }}
@@ -73,60 +33,6 @@ jobs:
         run: |
           npx ts-node ./src/export-transactions.ts --${{ github.event.inputs.choice }}
           npx ts-node ./src/upload.ts Transactions ./public/transactions.csv
-
-      - name: Pull Collections
-        env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          SHEET_CLIENT_EMAIL: ${{ secrets.SHEET_CLIENT_EMAIL }}
-          SHEET_PRIVATE_KEY: ${{ secrets.SHEET_PRIVATE_KEY }}
-        run: |
-          npx ts-node ./src/export-collections.ts
-          npx ts-node ./src/upload.ts Collections ./public/collections.csv
-
-      - name: Pull Wearables
-        env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          SHEET_CLIENT_EMAIL: ${{ secrets.SHEET_CLIENT_EMAIL }}
-          SHEET_PRIVATE_KEY: ${{ secrets.SHEET_PRIVATE_KEY }}
-        run: |
-          npx ts-node ./src/export-wearables.ts
-          npx ts-node ./src/upload.ts Wearables ./public/wearables.csv
-
-      - name: Pull Curations
-        env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          SHEET_CLIENT_EMAIL: ${{ secrets.SHEET_CLIENT_EMAIL }}
-          SHEET_PRIVATE_KEY: ${{ secrets.SHEET_PRIVATE_KEY }}
-        run: |
-          npx ts-node ./src/export-curations.ts
-          npx ts-node ./src/upload.ts Curations ./public/curations.csv
-
-      - name: Pull Members
-        env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          SHEET_CLIENT_EMAIL: ${{ secrets.SHEET_CLIENT_EMAIL }}
-          SHEET_PRIVATE_KEY: ${{ secrets.SHEET_PRIVATE_KEY }}
-        run: |
-          npx ts-node ./src/export-members.ts
-          npx ts-node ./src/upload.ts Members ./public/members.csv
-
-      - name: Export KPIs
-        env:
-          NODE_OPTIONS: "--max-old-space-size=4096"
-          SHEET_ID: ${{ secrets.SHEET_ID }}
-          SHEET_CLIENT_EMAIL: ${{ secrets.SHEET_CLIENT_EMAIL }}
-          SHEET_PRIVATE_KEY: ${{ secrets.SHEET_PRIVATE_KEY }}
-        run: |
-          npx ts-node ./src/export-kpis.ts
-          npx ts-node ./src/upload.ts KPIs ./public/kpis.json
-
-      - name: Export API
-        env:
-          NODE_OPTIONS: "--max-old-space-size=4096"
-        run: npx ts-node ./src/export-api.ts
-
-      - name: Export Report
-        run: npx ts-node ./src/export-report.ts
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.2
